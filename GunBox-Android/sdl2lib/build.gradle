@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+            // Limiting to a smaller set of  ABIs to save time while testing:
+            abiFilters = rootProject.ext.abiFilters
+        }
+
+        externalNativeBuild {
+            cmake {
+                // Passes optional arguments to CMake.
+                arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
+                          // Location on your host where CMake puts the LIBRARY target files when built.
+                          "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}",
+                          // Location on your host where CMake puts the STATIC LIBRARY target files when built.
+                          "-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}"
+
+                // Specifies the library and executable targets from your CMake project
+                // that Gradle should build.
+                targets "SDL2-static", "SDL2main"
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            // Tells Gradle to put outputs from external native
+            // builds in the path specified below.
+            buildStagingDirectory = "${rootProject.ext.nativeStagingDirectory}/${project.name}"
+
+            // Tells Gradle to find the root CMake build script in the same
+            // directory as the module's build.gradle file. Gradle requires this
+            // build script to add your CMake project as a build dependency and
+            // pull your native sources into your Android project.
+            path "${rootProject.ext.externalLibrariesDirectory}/SDL2/CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}

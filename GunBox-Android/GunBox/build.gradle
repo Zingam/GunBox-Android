@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        applicationId "com.roccoormm.sdl2app"
+        minSdkVersion 26
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+            // Limiting to a smaller set of  ABIs to save time while testing:
+            abiFilters = rootProject.ext.abiFilters
+        }
+
+        externalNativeBuild {
+            cmake {
+                // Passes optional arguments to CMake.
+                arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
+                        // Location on your host where CMake puts the LIBRARY target files when built.
+                        "-DNativeLibraryArtifactsOutputDir:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}",
+                        //"-DRootDir:STRING=${rootProject.rootDir}",
+                        "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
+                        // When linking a static SDL2 library to a shared library SDL_main gets stripped
+                        // thus we compile all libraries as static and link them with:
+                        //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
+                        //   GunBox_Engine_main
+                        //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
+                        "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO",
+                        "-UseStaticSDL2Library:BOOL=YES"
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            // Tells Gradle to put outputs from external native
+            // builds in the path specified below.
+            buildStagingDirectory = "${rootProject.ext.nativeStagingDirectory}/${project.name}"
+
+            // Tells Gradle to find the root CMake build script in the same
+            // directory as the module's build.gradle file. Gradle requires this
+            // build script to add your CMake project as a build dependency and
+            // pull your native sources into your Android project.
+            path "${rootProject.ext.appProjectDirectory}/CMakeLists.txt"
+            version "3.12.0"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // External libraries - the libraries will be build and added to the .apk
+    implementation project(':sdl2lib')
+}
