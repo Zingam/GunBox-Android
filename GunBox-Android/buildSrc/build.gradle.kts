@@ -1,0 +1,22 @@
+////////////////////////////////////////////////////////////////////////////////
+// Variable:
+//   buildOutputRootDirectory
+// Description:
+//   Sets the location of the root directory for build artifacts
+////////////////////////////////////////////////////////////////////////////////
+
+val buildOutputRootDirectory = "${rootDir.parent}/../__build-output"
+
+////////////////////////////////////////////////////////////////////////////////
+
+plugins {
+    `kotlin-dsl`
+}
+
+repositories {
+    jcenter()
+}
+
+allprojects {
+    buildDir = File("$buildOutputRootDirectory/${project.name}")
+}

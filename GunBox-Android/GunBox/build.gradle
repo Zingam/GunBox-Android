@@ -1,37 +1,39 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion Versions.compileSdk
 
 
 
     defaultConfig {
         applicationId "com.roccoormm.sdl2app"
-        minSdkVersion 26
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
 
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
-            abiFilters = rootProject.ext.abiFilters
+            abiFilters = Deps.abiFilters
         }
 
         externalNativeBuild {
             cmake {
                 // Passes optional arguments to CMake.
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
-                        // Location on your host where CMake puts the LIBRARY target files when built.
-                        "-DNativeLibraryArtifactsOutputDir:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}",
-                        //"-DRootDir:STRING=${rootProject.rootDir}",
-                        "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
-                        // When linking a static SDL2 library to a shared library SDL_main gets stripped
-                        // thus we compile all libraries as static and link them with:
-                        //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
-                        //   GunBox_Engine_main
-                        //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
-                        "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO",
-                        "-UseStaticSDL2Library:BOOL=YES"
+                          // Location on your host where CMake puts the LIBRARY
+                          // target files when built.
+                          "-DNativeLibraryArtifactsOutputDir:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}",
+                          //"-DRootDir:STRING=${rootProject.rootDir}",
+                          "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
+                          // When linking a static SDL2 library to a shared
+                          // library SDL_main gets stripped thus we compile all
+                          // libraries as static and link them with:
+                          //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
+                          //   GunBox_Engine_main
+                          //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
+                          "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO",
+                          "-UseStaticSDL2Library:BOOL=YES"
             }
         }
     }

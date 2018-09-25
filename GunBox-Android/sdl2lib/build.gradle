@@ -1,32 +1,34 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion Versions.compileSdk
 
 
 
     defaultConfig {
-        minSdkVersion 26
-        targetSdkVersion 27
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
-            abiFilters = rootProject.ext.abiFilters
+            abiFilters = Deps.abiFilters
         }
 
         externalNativeBuild {
             cmake {
                 // Passes optional arguments to CMake.
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
-                          // Location on your host where CMake puts the LIBRARY target files when built.
+                          // Location on your host where CMake puts the LIBRARY
+                          // target files when built.
                           "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}",
-                          // Location on your host where CMake puts the STATIC LIBRARY target files when built.
+                          // Location on your host where CMake puts the STATIC
+                          // LIBRARY target files when built.
                           "-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}"
 
-                // Specifies the library and executable targets from your CMake project
-                // that Gradle should build.
+                // Specifies the library and executable targets from your CMake
+                // project that Gradle should build.
                 targets "SDL2-static", "SDL2main"
             }
         }
