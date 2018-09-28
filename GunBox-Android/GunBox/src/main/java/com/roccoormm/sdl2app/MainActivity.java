@@ -18,7 +18,7 @@ public class MainActivity extends SDLActivity {
     @Override
     protected String[] getLibraries() {
         return new String[] {
-                "GunBox_Game",
+                "GunBox_Game"
         };
     }
 }

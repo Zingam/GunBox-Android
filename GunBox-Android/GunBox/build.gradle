@@ -33,7 +33,7 @@ android {
                           //   GunBox_Engine_main
                           //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
                           "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO",
-                          "-UseStaticSDL2Library:BOOL=YES"
+                          "-DUseStaticSDL2Library:BOOL=${Deps.useStaticSDL2Library}"
             }
         }
     }
