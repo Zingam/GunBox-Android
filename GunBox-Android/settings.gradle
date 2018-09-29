@@ -1,1 +1,1 @@
-include ':GunBox', ':sdl2lib'
+include ':GunBox', ':sdl2lib', ':freetype2lib'

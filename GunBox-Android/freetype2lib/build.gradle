@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -6,11 +6,10 @@ android {
 
 
     defaultConfig {
-        applicationId "com.roccoormm.sdl2app"
         minSdkVersion Versions.minSdk
         targetSdkVersion Versions.targetSdk
-        versionCode Versions.versionCode
-        versionName Versions.versionName
+        versionCode 1
+        versionName "1.0"
 
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
@@ -23,16 +22,15 @@ android {
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
                           // Location on your host where CMake puts the LIBRARY
                           // target files when built.
-                          "-DNativeLibraryArtifactsOutputDir:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}",
-                          "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
-                          // When linking a static SDL2 library to a shared
-                          // library SDL_main gets stripped thus we compile all
-                          // libraries as static and link them with:
-                          //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
-                          //   GunBox_Engine_main
-                          //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
-                          "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO",
-                          "-DUseSharedSDL2Library:BOOL=${Deps.sdl2_BuildAsShared}"
+                          "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}",
+                          // Location on your host where CMake puts the STATIC
+                          // LIBRARY target files when built.
+                          "-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}",
+                          "-DBUILD_SHARED_LIBS:BOOL=${Deps.freetype2_BuildAsShared}"
+
+                // Specifies the library and executable targets from your CMake
+                // project that Gradle should build.
+                targets "freetype"
             }
         }
     }
@@ -54,15 +52,11 @@ android {
             // directory as the module's build.gradle file. Gradle requires this
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
-            path "${rootProject.ext.appProjectDirectory}/CMakeLists.txt"
-            version "3.12.0"
+            path "${rootProject.ext.externalLibrariesDirectory}/FreeType2/CMakeLists.txt"
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    // External libraries - the libraries will be build and added to the .apk
-    implementation project(':sdl2lib')
 }

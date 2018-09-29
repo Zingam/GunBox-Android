@@ -29,7 +29,7 @@ android {
 
                 // Specifies the library and executable targets from your CMake
                 // project that Gradle should build.
-                targets Deps.sdl2Targets
+                targets Deps.sdl2_Targets
             }
         }
     }

@@ -17,12 +17,18 @@ object Versions {
 object Deps {
     // Application
     val abiFilters = listOf("arm64-v8a") // Android platforms to compile for
-    var sdl2Targets = "SDL2"             // SDL2 library targets to build
-    var useStaticSDL2Library = "NO"      // SDL2 library type (SHARED)
+
+    // Libraries
+    //   FreeType2
+    var freetype2_BuildAsShared = "YES"    // FreeType2 library type (SHARED)
+    //   SDL2
+    var sdl2_BuildAsShared = "YES"         // SDL2 library type (SHARED)
+    var sdl2_Targets = "SDL2"              // SDL2 library targets to build
     init {
         if (usingStaticLibraries) {
-            sdl2Targets = "SDL2-static"  // SDL2 library targets to build
-            useStaticSDL2Library = "YES" // SDL2 library type (STATIC)
+            freetype2_BuildAsShared = "NO" // FreeType2 library type (STATIC)
+            sdl2_BuildAsShared = "NO"      // SDL2 library type (STATIC)
+            sdl2_Targets = "SDL2-static"   // SDL2 library targets to build
         }
     }
 
@@ -31,7 +37,8 @@ object Deps {
 
     // Final report
     init {
-        println("  SDL2 static library: $useStaticSDL2Library")
-        println("  SDL2 targets:        $sdl2Targets")
+        println("    Building FreeType2 as static library: $freetype2_BuildAsShared")
+        println("    Building SDL2 as static library:      $sdl2_BuildAsShared")
+        println("    Building SDL2 targets:                $sdl2_Targets")
     }
 }

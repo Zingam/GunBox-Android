@@ -1,1 +1,6 @@
-/GunBox
+# Keep these files
+!.gitignore
+!MakeSymlink.bat
+
+# Ignore everything else
+*
