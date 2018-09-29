@@ -21,18 +21,22 @@ android {
             cmake {
                 // Passes optional arguments to CMake.
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
+                          // External libraries sources' root dir
+                          "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
                           // Location on your host where CMake puts the LIBRARY
                           // target files when built.
                           "-DNativeLibraryArtifactsOutputDir:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}",
-                          "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
+                          // Search paths for the external libraries' binaries
+                          "-DBinaryPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
+                          "-DBinaryPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}",
                           // When linking a static SDL2 library to a shared
                           // library SDL_main gets stripped thus we compile all
                           // libraries as static and link them with:
                           //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
                           //   GunBox_Engine_main
                           //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
-                          "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO",
-                          "-DUseSharedSDL2Library:BOOL=${Deps.sdl2_BuildAsShared}"
+                          "-DUseSharedSDL2Library:BOOL=${Deps.sdl2_BuildAsShared}",
+                          "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO"
             }
         }
     }
@@ -64,5 +68,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // External libraries - the libraries will be build and added to the .apk
-    implementation project(':sdl2lib')
+    implementation project(":${Deps.freetype2_ModuleName}")
+    implementation project(":${Deps.sdl2_ModuleName}")
 }

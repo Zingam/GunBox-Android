@@ -20,10 +20,12 @@ object Deps {
 
     // Libraries
     //   FreeType2
-    var freetype2_BuildAsShared = "YES"    // FreeType2 library type (SHARED)
+    var freetype2_BuildAsShared = "YES"             // FreeType2 library type (SHARED)
+    const val freetype2_ModuleName = "libfreetype2" // The name of the FreeType2 module
     //   SDL2
-    var sdl2_BuildAsShared = "YES"         // SDL2 library type (SHARED)
-    var sdl2_Targets = "SDL2"              // SDL2 library targets to build
+    var sdl2_BuildAsShared = "YES"                  // SDL2 library type (SHARED)
+    const val sdl2_ModuleName = "libsdl2"           // The name of the SDL2 module
+    var sdl2_Targets = "SDL2"                       // SDL2 library targets to build
     init {
         if (usingStaticLibraries) {
             freetype2_BuildAsShared = "NO" // FreeType2 library type (STATIC)
