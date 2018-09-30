@@ -59,6 +59,18 @@ android {
             version "3.12.0"
         }
     }
+
+    task export_apk(type: Copy, dependsOn: ['assemble']) {
+        group "Export"
+        android.applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                from (output.outputFile.getParent()) {
+                    include "*.apk"
+                }
+                into "${rootProject.ext.apkOutputDirectory}"
+            }
+        }
+    }
 }
 
 dependencies {

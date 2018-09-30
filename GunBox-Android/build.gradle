@@ -35,6 +35,8 @@ allprojects {
 // This block encapsulates custom properties and makes them available to all
 // modules in the project.
 ext {
+    // *.apk output directory
+    apkOutputDirectory = cannonizePath("${file(buildOutputRootDirectory).parent}/__apk")
     // External libraries source location
     externalLibrariesDirectory = cannonizePath("${rootDir.parent}/ExternalLibraries/")
     // Main project source location
