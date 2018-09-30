@@ -21,12 +21,9 @@ android {
             cmake {
                 // Passes optional arguments to CMake.
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
-                          // External libraries sources' root dir
+                          // External library sources root dir
                           "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
-                          // Location on your host where CMake puts the LIBRARY
-                          // target files when built.
-                          "-DNativeLibraryArtifactsOutputDir:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}",
-                          // Search paths for the external libraries' binaries
+                          // Search paths for the external library binaries
                           "-DBinaryPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
                           "-DBinaryPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}",
                           // When linking a static SDL2 library to a shared

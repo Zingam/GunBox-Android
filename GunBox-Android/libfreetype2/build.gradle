@@ -22,10 +22,7 @@ android {
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
                           // Location on your host where CMake puts the LIBRARY
                           // target files when built.
-                          "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}",
-                          // Location on your host where CMake puts the STATIC
-                          // LIBRARY target files when built.
-                          "-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}",
+                          "-DLibraryArtifactsOutputDirectory:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}",
                           "-DBUILD_SHARED_LIBS:BOOL=${Deps.freetype2_BuildAsShared}"
 
                 // Specifies the library and executable targets from your CMake

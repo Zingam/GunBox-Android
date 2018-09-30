@@ -1,5 +1,2 @@
-# Keep these files
-!.gitignore
-
-# Ignore everything else
-*
+# Ignore the library sources subfolders
+*/*/
