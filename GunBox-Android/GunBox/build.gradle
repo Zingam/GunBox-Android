@@ -22,18 +22,18 @@ android {
                 // Passes optional arguments to CMake.
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
                           // External library sources root dir
-                          "-DExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
+                          "-D.ExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
                           // Search paths for the external library binaries
-                          "-DBinaryPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
-                          "-DBinaryPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}",
+                          "-D.LibraryArtifactsPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
+                          "-D.LibraryArtifactsPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}",
                           // When linking a static SDL2 library to a shared
                           // library SDL_main gets stripped thus we compile all
                           // libraries as static and link them with:
                           //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
                           //   GunBox_Engine_main
                           //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
-                          "-DUseSharedSDL2Library:BOOL=${Deps.sdl2_BuildAsShared}",
-                          "-Doption_ENGINE_LIBRARY_AS_SHARED:BOOL=NO"
+                          "-D.UseSharedLibrary_SDL2:BOOL=${Deps.sdl2_BuildAsShared}",
+                          "-Doption_EngineLibraryAs_SHARED:BOOL=NO"
             }
         }
     }
