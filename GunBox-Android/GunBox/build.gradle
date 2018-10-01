@@ -60,6 +60,18 @@ android {
         }
     }
 
+    task copy_apk(type: Copy) {
+        group "Export"
+        android.applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                from (output.outputFile.getParent()) {
+                    include "*.apk"
+                }
+                into "${rootProject.ext.apkOutputDirectory}"
+            }
+        }
+    }
+
     task export_apk(type: Copy, dependsOn: ['assemble']) {
         group "Export"
         android.applicationVariants.all { variant ->
