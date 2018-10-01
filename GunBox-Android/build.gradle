@@ -36,7 +36,7 @@ allprojects {
 // modules in the project.
 ext {
     // *.apk output directory
-    apkOutputDirectory = cannonizePath("${file(buildOutputRootDirectory).parent}/__apk")
+    apkOutputDirectory = cannonizePath("${rootDir.parent}/__apk-exports")
     // External libraries source location
     externalLibrariesDirectory = cannonizePath("${rootDir.parent}/ExternalLibraries/")
     // Main project source location

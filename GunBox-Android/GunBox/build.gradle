@@ -21,19 +21,19 @@ android {
             cmake {
                 // Passes optional arguments to CMake.
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
-                          // External library sources root dir
-                          "-D.ExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
-                          // Search paths for the external library binaries
-                          "-D.LibraryArtifactsPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
-                          "-D.LibraryArtifactsPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}",
-                          // When linking a static SDL2 library to a shared
-                          // library SDL_main gets stripped thus we compile all
-                          // libraries as static and link them with:
-                          //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
-                          //   GunBox_Engine_main
-                          //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
-                          "-D.UseSharedLibrary_SDL2:BOOL=${Deps.sdl2_BuildAsShared}",
-                          "-Doption_EngineLibraryAs_SHARED:BOOL=NO"
+                        // External library sources root dir
+                        "-D.ExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
+                        // Search paths for the external library binaries
+                        "-D.LibraryArtifactsPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
+                        "-D.LibraryArtifactsPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}",
+                        // When linking a static SDL2 library to a shared
+                        // library SDL_main gets stripped thus we compile all
+                        // libraries as static and link them with:
+                        //   $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
+                        //   GunBox_Engine_main
+                        //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
+                        "-D.UseSharedLibrary_SDL2:BOOL=${Deps.sdl2_BuildAsShared}",
+                        "-Doption_EngineLibraryAs_SHARED:BOOL=NO"
             }
         }
     }
@@ -60,28 +60,29 @@ android {
         }
     }
 
-    task copy_apk(type: Copy) {
-        group "Export"
+    // Specification of the copy tasks
+    def export_apk_copySpec = copySpec {
         android.applicationVariants.all { variant ->
             variant.outputs.all { output ->
-                from (output.outputFile.getParent()) {
+                from(output.outputFile.getParent()) {
                     include "*.apk"
                 }
-                into "${rootProject.ext.apkOutputDirectory}"
             }
         }
     }
 
-    task export_apk(type: Copy, dependsOn: ['assemble']) {
+    // Copy existing Android packages (*.apk)
+    task copy_apk(type: Copy) {
         group "Export"
-        android.applicationVariants.all { variant ->
-            variant.outputs.all { output ->
-                from (output.outputFile.getParent()) {
-                    include "*.apk"
-                }
-                into "${rootProject.ext.apkOutputDirectory}"
-            }
-        }
+        with export_apk_copySpec
+        into "${rootProject.ext.apkOutputDirectory}"
+    }
+
+    // Build all variants and export the generated Android packages (*.apk)
+    task exportAll_apk(type: Copy, dependsOn: ['assemble']) {
+        group "Export"
+        with export_apk_copySpec
+        into "${rootProject.ext.apkOutputDirectory}"
     }
 }
 

@@ -221,7 +221,9 @@ FakesAssemblies/
 # Binary files
 *.exe
 
-# Directories
+# Output directories
+__apk-*/
+__apk-exports/
 build-*/
 __build-*
 __doc-*
