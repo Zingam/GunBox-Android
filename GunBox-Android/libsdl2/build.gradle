@@ -20,9 +20,9 @@ android {
             cmake {
                 // Passes optional arguments to CMake.
                 arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
-                          // Location on your host where CMake puts the LIBRARY
-                          // target files when built.
-                          "-D.LibraryArtifactsOutputDirectory:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}"
+                        // Location on your host where CMake puts the LIBRARY
+                        // target files when built.
+                        "-D.LibraryArtifactsOutputDirectory:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${project.name}"
 
                 // Specifies the library and executable targets from your CMake
                 // project that Gradle should build.

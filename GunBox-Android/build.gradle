@@ -4,7 +4,7 @@
 def buildOutputRootDirectory = "${rootDir.parent}/__build-output/${rootProject.name}"
 def gradleBuildOutputDirectory = "${buildOutputRootDirectory}/GradleBuilds"
 
-String cannonizePath(String path) {
+String canonizePath(String path) {
     return file(path).canonicalPath.replace('\\', '/')
 }
 
@@ -29,22 +29,22 @@ allprojects {
         jcenter()
     }
 
-    buildDir = cannonizePath("${gradleBuildOutputDirectory}/${project.name}")
+    buildDir = canonizePath("${gradleBuildOutputDirectory}/${project.name}")
 }
 
 // This block encapsulates custom properties and makes them available to all
 // modules in the project.
 ext {
     // *.apk output directory
-    apkOutputDirectory = cannonizePath("${rootDir.parent}/__apk-exports")
+    apkOutputDirectory = canonizePath("${rootDir.parent}/__apk-exports")
     // External libraries source location
-    externalLibrariesDirectory = cannonizePath("${rootDir.parent}/ExternalLibraries/")
+    externalLibrariesDirectory = canonizePath("${rootDir.parent}/ExternalLibraries/")
     // Main project source location
-    appProjectDirectory = cannonizePath("${rootDir.parent}/GunBox/GunBox")
+    appProjectDirectory = canonizePath("${rootDir.parent}/GunBox/GunBox")
     // Location for library build artifacts
-    nativeLibraryArtifactsOutputDirectory = cannonizePath("${buildOutputRootDirectory}/__LibraryBuildArtifacts")
+    nativeLibraryArtifactsOutputDirectory = canonizePath("${buildOutputRootDirectory}/__LibraryBuildArtifacts")
     // Build directories location
-    nativeStagingDirectory = cannonizePath("${buildOutputRootDirectory}/NativeBuilds/")
+    nativeStagingDirectory = canonizePath("${buildOutputRootDirectory}/NativeBuilds/")
 }
 
 task clean(type: Delete) {
