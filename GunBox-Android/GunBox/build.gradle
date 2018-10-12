@@ -19,15 +19,14 @@ android {
 
         externalNativeBuild {
             cmake {
-                // Passes optional arguments to CMake.
-                arguments "-DANDROID_ARM_NEON=TRUE", // Build with NEON support
-                        // External library sources root dir
-                        "-D.ExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}",
-                        // Search paths for the external library binaries
-                        "-D.LibraryArtifactsPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
-                        "-D.LibraryArtifactsPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}",
-                        // Library type to link to
-                        "-D.UseSharedLibrary_FreeType2:BOOL=${Deps.freetype2_BuildAsShared}",
+                // Passes optional arguments to CMake:
+                //   External library sources root dir
+                arguments "-D.ExternalLibrariesRootDir:STRING=${rootProject.ext.externalLibrariesDirectory}"
+                //   Search paths for the external library binaries
+                arguments "-D.LibraryArtifactsPath_FreeType2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.freetype2_ModuleName}",
+                        "-D.LibraryArtifactsPath_SDL2:STRING=${rootProject.ext.nativeLibraryArtifactsOutputDirectory}/${Deps.sdl2_ModuleName}"
+                //   Library type to link to
+                arguments "-D.UseSharedLibrary_FreeType2:BOOL=${Deps.freetype2_BuildAsShared}",
                         // When linking a static SDL2 library to a shared
                         // library SDL_main gets stripped thus we compile all
                         // libraries as static and link them with:

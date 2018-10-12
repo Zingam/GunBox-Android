@@ -1,4 +1,4 @@
-val usingStaticLibraries = false
+const val usingStaticLibraries = false
 
 object Versions {
     // Application
@@ -11,7 +11,7 @@ object Versions {
     const val targetSdk = 27
 
     // Plugins
-    const val androidGradlePlugin = "3.2.0"
+    const val androidGradlePlugin = "3.2.1"
 }
 
 object Deps {
