@@ -6,8 +6,22 @@ GunBox-Android
 ```
 
 ## Prerequisites
-1. Put *SDL2 library* in the directory *ExternalLibraries/SDL2*
-2. Clone GunBox repository next to the Android project directory, e.g. folder 
+
+### Software
+1. Android NDK r18
+2. Android Studio 3.2
+3. C++17 compiler
+4. CMake 3.12 (installed externally)
+
+### Third Party Libraries
+1. FreeType 2.9.1 (or newer)
+2. SDL 2.0.8 (or newer)
+
+## Configuring the Build
+
+1. Put *FreeType* library in the directory *ExternalLibraries/FreeType2*
+2. Put *SDL* library in the directory *ExternalLibraries/SDL2*
+3. Clone GunBox repository next to the Android project directory, e.g. folder 
    structure:
 ```
  |
@@ -20,8 +34,7 @@ GunBox-Android
          +- GunBox               <--- Symlink or source files
             MakeSymlink.bat      <--- Use to create a symlink
 ```
-3. Create a symlink `GunBox` (or alternatively put the **GunBox** project source 
-   files inside)
+4. Create a symlink `GunBox` (or alternatively put the **GunBox** project source files inside)
 
 and create a symlink to
 
