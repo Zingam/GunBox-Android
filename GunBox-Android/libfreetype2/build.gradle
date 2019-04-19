@@ -28,6 +28,7 @@ android {
                 // Specifies the library and executable targets from your CMake
                 // project that Gradle should build.
                 targets "freetype"
+                version Versions.cmake
             }
         }
     }
@@ -50,6 +51,7 @@ android {
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
             path "${rootProject.ext.externalLibrariesDirectory}/FreeType2/CMakeLists.txt"
+            version "3.14.0"
         }
     }
 }

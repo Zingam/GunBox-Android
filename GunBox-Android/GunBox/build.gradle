@@ -57,7 +57,7 @@ android {
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
             path "${rootProject.ext.appProjectDirectory}/CMakeLists.txt"
-            version "3.12.0"
+            version Versions.cmake
         }
     }
 
@@ -65,7 +65,7 @@ android {
     def export_apk_copySpec = copySpec {
         android.applicationVariants.all { variant ->
             variant.outputs.all { output ->
-                from(output.outputFile.getParent()) {
+                from(output.outputFile.parent) {
                     include "*.apk"
                 }
             }

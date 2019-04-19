@@ -6,12 +6,15 @@ object Versions {
     const val versionName = "1.0.0"
 
     // Build configuration
-    const val compileSdk = 27
+    const val compileSdk = 26
     const val minSdk = 26
-    const val targetSdk = 27
+    const val targetSdk = 26
 
     // Plugins
-    const val androidGradlePlugin = "3.2.1"
+    const val androidGradlePlugin = "3.4.0"
+
+    // CMake
+    const val cmake = "3.14.0"
 }
 
 object Deps {
@@ -39,8 +42,8 @@ object Deps {
 
     // Final report
     init {
-        println("    Building FreeType2 as static library: $freetype2_BuildAsShared")
-        println("    Building SDL2 as static library:      $sdl2_BuildAsShared")
+        println("    Building FreeType2 as shared library: $freetype2_BuildAsShared")
+        println("    Building SDL2 as shared library:      $sdl2_BuildAsShared")
         println("    Building SDL2 targets:                $sdl2_Targets")
     }
 }

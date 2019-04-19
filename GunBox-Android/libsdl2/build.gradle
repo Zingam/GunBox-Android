@@ -48,6 +48,7 @@ android {
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
             path "${rootProject.ext.externalLibrariesDirectory}/SDL2/CMakeLists.txt"
+            version Versions.cmake
         }
     }
 }
