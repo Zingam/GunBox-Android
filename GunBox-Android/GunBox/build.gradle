@@ -76,14 +76,14 @@ android {
     task copy_apk(type: Copy) {
         group "Export"
         with export_apk_copySpec
-        into "${rootProject.ext.apkOutputDirectory}"
+        into "${rootProject.ext.apkExportDirectory}"
     }
 
     // Build all variants and export the generated Android packages (*.apk)
     task exportAll_apk(type: Copy, dependsOn: ['assemble']) {
         group "Export"
         with export_apk_copySpec
-        into "${rootProject.ext.apkOutputDirectory}"
+        into "${rootProject.ext.apkExportDirectory}"
     }
 }
 
