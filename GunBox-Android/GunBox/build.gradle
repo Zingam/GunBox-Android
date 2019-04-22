@@ -34,7 +34,10 @@ android {
                         //   GunBox_Engine_main
                         //   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
                         "-D.UseSharedLibrary_SDL2:BOOL=${Deps.sdl2_BuildAsShared}",
-                        "-Doption_EngineLibraryAs_SHARED:BOOL=NO"
+                        "-Doption_EngineLibraryAs_SHARED:BOOL=${Options.engineLibrary_BuildAsShared}"
+                // Debug options
+                arguments "-Doption_CheckGraphicsApiCalls:BOOL=${Options.checkGraphicsApiCalls}",
+                        "-Doption_EnableLoggingLevel_Verbose:BOOL=${Options.enableLoggingLevel_Verbose}"
             }
         }
     }

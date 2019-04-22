@@ -1,5 +1,11 @@
 const val usingStaticLibraries = false
 
+object Options {
+    const val engineLibrary_BuildAsShared = "NO"
+    const val checkGraphicsApiCalls = "YES"
+    const val enableLoggingLevel_Verbose = "YES"
+}
+
 object Versions {
     // Application
     const val versionCode = 1
