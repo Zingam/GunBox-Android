@@ -2,16 +2,16 @@ GunBox-Android
 ==============
 
 ```
-    printf("Android Studio gradle scripts for GunBox project")
+    reLogI("Android Studio gradle scripts for GunBox project");
 ```
 
 ## Prerequisites
 
 ### Software
-1. Android NDK r18
-2. Android Studio 3.2
+1. Android NDK r19
+2. Android Studio 3.4
 3. C++17 compiler
-4. CMake 3.12 (installed externally)
+4. CMake 3.14.0 (installed externally)
 
 ### Third Party Libraries
 1. FreeType 2.9.1 (or newer)
@@ -28,17 +28,37 @@ GunBox-Android
  +- GunBox                       <--- GunBox sources
     GunBox-Android               <--- Android app project
      +- ExternalLibraries
-         +- SDL2                 <--- SDL2 sources        
+         +- FreeType2
+              +- FreeType2       <--- FreeType2 sources
+              +- CMakeLists.txt
+         +- SDL2
+              +- SDL2            <--- SDL2 sources
+              +- CMakeLists.txt 
         GunBox-Android           <--- Android project
         GunBoxProject
          +- GunBox               <--- Symlink or source files
             MakeSymlink.bat      <--- Use to create a symlink
 ```
-4. Create a symlink `GunBox` (or alternatively put the **GunBox** project source files inside)
-
-and create a symlink to
+4. Create a symlink `GunBox` (or alternatively put the **GunBox** project source
+   files inside) to the **GunBox** project source directory.
 
 ## Notes
-The libraries are compile as static and linked with:
 
-to prevent `SDL_main` from being stripped.
+1. To prevent `SDL_main` from being stripped. The libraries are compile as
+   static and linked with:
+```
+  $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
+  GunBox_Engine_main
+  $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
+```
+
+2. As Android does not support static linking of `libdl.a`, SDL2's
+   CMakeLists.txt may need to be modified.
+* Find the following line:
+```
+  find_library(ANDROID_DL_LIBRARY dl)
+```
+* and change it to:
+```
+  find_library(ANDROID_DL_LIBRARY libdl.so dl)
+```
