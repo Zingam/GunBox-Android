@@ -5,32 +5,33 @@ import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 plugins { id("com.android.application") }
 
 android {
-    compileSdkVersion (Versions.compileSdk)
+    compileSdkVersion(Versions.compileSdk)
 
 
 
     defaultConfig {
-        applicationId = "com.roccoormm.sdl2app.GunBox"
-        minSdkVersion (Versions.minSdk)
-        targetSdkVersion (Versions.targetSdk)
+        applicationId = Versions.applicationId
+
+        minSdkVersion(Versions.minSdk)
+        targetSdkVersion(Versions.targetSdk)
         versionCode = Versions.versionCode
         versionName = Versions.versionName
 
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
-            setAbiFilters (Deps.abiFilters)
+            setAbiFilters(Deps.abiFilters)
         }
 
         externalNativeBuild {
             cmake {
                 // Passes optional arguments to CMake:
                 //   External library sources root dir
-                arguments.add ("-D.ExternalLibrariesRootDir:STRING=${rootProject.extra["externalLibrariesDirectory"]}")
+                arguments.add("-D.ExternalLibrariesRootDir:STRING=${rootProject.extra["externalLibrariesDirectory"]}")
                 //   Search paths for the external library binaries
-                arguments.add ("-D.LibraryArtifactsPath_FreeType2:STRING=${rootProject.extra["nativeLibraryArtifactsOutputDirectory"]}/${Deps.freetype2_ModuleName}")
-                arguments.add ("-D.LibraryArtifactsPath_SDL2:STRING=${rootProject.extra["nativeLibraryArtifactsOutputDirectory"]}/${Deps.sdl2_ModuleName}")
+                arguments.add("-D.LibraryArtifactsPath_FreeType2:STRING=${rootProject.extra["nativeLibraryArtifactsOutputDirectory"]}/${Deps.freetype2_ModuleName}")
+                arguments.add("-D.LibraryArtifactsPath_SDL2:STRING=${rootProject.extra["nativeLibraryArtifactsOutputDirectory"]}/${Deps.sdl2_ModuleName}")
                 //   Library type to link to
-                arguments.add ("-D.UseSharedLibrary_FreeType2:BOOL=${Deps.freetype2_BuildAsShared}")
+                arguments.add("-D.UseSharedLibrary_FreeType2:BOOL=${Deps.freetype2_BuildAsShared}")
                 //     When linking a static SDL2 library to a shared library SDL_main gets stripped
                 //     thus we compile all libraries as static and link them with:
                 //       $<$<PLATFORM_ID:Android>:-Wl,--whole-archive>
@@ -39,8 +40,8 @@ android {
                 arguments.add("-D.UseSharedLibrary_SDL2:BOOL=${Deps.sdl2_BuildAsShared}")
                 arguments.add("-Doption_EngineLibraryAs_SHARED:BOOL=${Options.engineLibrary_BuildAsShared}")
                 // Debug options
-                arguments.add ("-Doption_CheckGraphicsApiCalls:BOOL=${Options.checkGraphicsApiCalls}")
-                arguments.add ("-Doption_EnableLoggingLevel_Verbose:BOOL=${Options.enableLoggingLevel_Verbose}")
+                arguments.add("-Doption_CheckGraphicsApiCalls:BOOL=${Options.checkGraphicsApiCalls}")
+                arguments.add("-Doption_EnableLoggingLevel_Verbose:BOOL=${Options.enableLoggingLevel_Verbose}")
             }
         }
     }
@@ -48,7 +49,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles (getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 
@@ -56,26 +57,26 @@ android {
         cmake {
             // Tells Gradle to put outputs from external native
             // builds in the path specified below.
-            setBuildStagingDirectory ("${rootProject.extra["nativeStagingDirectory"]}/${project.name}")
+            setBuildStagingDirectory("${rootProject.extra["nativeStagingDirectory"]}/${project.name}")
 
             // Tells Gradle to find the root CMake build script in the same
             // directory as the module's build.gradle.kts.kts file. Gradle requires this
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
-            setPath ("${rootProject.extra["appProjectDirectory"]}/CMakeLists.txt")
-            setVersion (Versions.cmake)
+            setPath("${rootProject.extra["appProjectDirectory"]}/CMakeLists.txt")
+            setVersion(Versions.cmake)
         }
     }
 
     // Specification of the copy tasks
-    val export_apk_copySpec = copySpec {
+    val apkExportCopySpec: CopySpec = copySpec {
         applicationVariants.all(object : Action<ApplicationVariant> {
             override fun execute(variant: ApplicationVariant) {
                 variant.outputs.all(object : Action<BaseVariantOutput> {
                     override fun execute(output: BaseVariantOutput) {
                         val output = output as BaseVariantOutputImpl
                         from(output.outputFile.parent) {
-                            include ("*.apk")
+                            include("*.apk")
                         }
                     }
                 })
@@ -84,25 +85,28 @@ android {
     }
 
     // Copy existing Android packages (*.apk)
-    tasks.register ("copy_apk", Copy::class) {
+    tasks.register("copy_apk", Copy::class) {
+        dependsOn("assemble")
         group = "Export"
-        with (export_apk_copySpec)
-        into ("${rootProject.extra["apkExportDirectory"]}")
+
+        with(apkExportCopySpec)
+        into("${rootProject.extra["apkExportDirectory"]}")
     }
 
     // Build all variants and export the generated Android packages (*.apk)
-    tasks.register ("exportAll_apk", Copy::class) {
+    tasks.register("exportAll_apk", Copy::class) {
         dependsOn("assemble")
         group = "Export"
-        with (export_apk_copySpec)
-        into ("${rootProject.extra["apkExportDirectory"]}")
+
+        with(apkExportCopySpec)
+        into("${rootProject.extra["apkExportDirectory"]}")
     }
 }
 
 dependencies {
-    implementation (fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // External libraries - the libraries will be build and added to the .apk
-    implementation (project(":${Deps.freetype2_ModuleName}"))
-    implementation (project(":${Deps.sdl2_ModuleName}"))
+    implementation(project(":${Deps.freetype2_ModuleName}"))
+    implementation(project(":${Deps.sdl2_ModuleName}"))
 }

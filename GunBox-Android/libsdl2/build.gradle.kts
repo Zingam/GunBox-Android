@@ -1,19 +1,19 @@
 plugins { id("com.android.library") }
 
 android {
-    compileSdkVersion (Versions.compileSdk)
+    compileSdkVersion(Versions.compileSdk)
 
 
 
     defaultConfig {
-        minSdkVersion (Versions.minSdk)
-        targetSdkVersion (Versions.targetSdk)
+        minSdkVersion(Versions.minSdk)
+        targetSdkVersion(Versions.targetSdk)
         versionCode = 1
         versionName = "1.0"
 
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
-            setAbiFilters (Deps.abiFilters)
+            setAbiFilters(Deps.abiFilters)
         }
 
         externalNativeBuild {
@@ -21,11 +21,11 @@ android {
                 // Passes optional arguments to CMake:
                 //   Location on your host where CMake puts the LIBRARY
                 //   target files when built
-                arguments.add ("-D.LibraryArtifactsOutputDirectory:STRING=${rootProject.extra["nativeLibraryArtifactsOutputDirectory"]}/${project.name}")
+                arguments.add("-D.LibraryArtifactsOutputDirectory:STRING=${rootProject.extra["nativeLibraryArtifactsOutputDirectory"]}/${project.name}")
 
                 // Specifies the library and executable targets from your CMake
                 // project that Gradle should build.
-                targets.add (Deps.sdl2_Targets)
+                targets.add(Deps.sdl2_Targets)
             }
         }
     }
@@ -33,7 +33,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles (getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 
@@ -47,13 +47,13 @@ android {
             // directory as the module's build.gradle file. Gradle requires this
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
-            setPath ("${rootProject.extra["externalLibrariesDirectory"]}/SDL2/CMakeLists.txt")
-            setVersion (Versions.cmake)
+            setPath("${rootProject.extra["externalLibrariesDirectory"]}/SDL2/CMakeLists.txt")
+            setVersion(Versions.cmake)
         }
     }
 }
 
 dependencies {
-    implementation (fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
 

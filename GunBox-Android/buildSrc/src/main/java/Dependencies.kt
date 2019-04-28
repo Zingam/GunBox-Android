@@ -7,6 +7,8 @@ object Options {
 }
 
 object Versions {
+    const val applicationId = "com.roccoormm.sdl2app.GunBox"
+
     // Application
     const val versionCode = 1
     const val versionName = "1.0.0"
@@ -35,6 +37,7 @@ object Deps {
     var sdl2_BuildAsShared = "YES"                  // SDL2 library type (SHARED)
     const val sdl2_ModuleName = "libsdl2"           // The name of the SDL2 module
     var sdl2_Targets = "SDL2"                       // SDL2 library targets to build
+
     init {
         if (usingStaticLibraries) {
             freetype2_BuildAsShared = "NO" // FreeType2 library type (STATIC)
