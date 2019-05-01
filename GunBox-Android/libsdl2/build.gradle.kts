@@ -11,6 +11,10 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        sourceSets {
+            getByName("main").java.srcDirs("${rootProject.extra["externalLibrariesDirectory"]}/SDL2/${Deps.sdl2_LibraryDirectoryName}/android-project/app/src/main/java")
+        }
+
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
             setAbiFilters(Deps.abiFilters)

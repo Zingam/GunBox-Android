@@ -60,5 +60,5 @@ GunBox-Android
 ```
 * and change it to:
 ```
-  find_library(ANDROID_DL_LIBRARY libdl.so dl)
+  find_library(ANDROID_DL_LIBRARY NAMES libdl.so dl)
 ```
