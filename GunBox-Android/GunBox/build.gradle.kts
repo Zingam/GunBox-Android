@@ -39,14 +39,39 @@ android {
                 //       $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
                 arguments.add("-D.UseSharedLibrary_SDL2:BOOL=${Deps.sdl2_BuildAsShared}")
                 arguments.add("-Doption_EngineLibraryAs_SHARED:BOOL=${Options.engineLibrary_BuildAsShared}")
-                // Debug options
-                arguments.add("-Doption_CheckGraphicsApiCalls:BOOL=${Options.checkGraphicsApiCalls}")
-                arguments.add("-Doption_EnableLoggingLevel_Verbose:BOOL=${Options.enableLoggingLevel_Verbose}")
+
+            }
+        }
+    }
+
+    sourceSets {
+        getByName("debug") {
+            // Gradle includes libraries in the following path as dependencies
+            // of your CMake or ndk-build project so that they are packaged in
+            // your app’s APK.
+            val ndkPath = System.getenv("ANDROID_NDK")
+            if (null != ndkPath)
+            {
+                jniLibs.srcDir("$ndkPath/sources/third_party/vulkan/src/build-android/jniLibs/")
+            }
+            else
+            {
+                logger.error("Environment variable \"ANDROID_NDK\" is not defined. Vulkan layers won't be available.")
             }
         }
     }
 
     buildTypes {
+        getByName("debug") {
+            externalNativeBuild {
+                cmake {
+                    // Debug options
+                    arguments.add("-Doption_CheckGraphicsApiCalls:BOOL=${Options.checkGraphicsApiCalls}")
+                    arguments.add("-Doption_EnableLoggingLevel_Verbose:BOOL=${Options.enableLoggingLevel_Verbose}")
+                }
+            }
+        }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
@@ -86,7 +111,6 @@ android {
 
     // Copy existing Android packages (*.apk)
     tasks.register("copy_apk", Copy::class) {
-        dependsOn("assemble")
         group = "Export"
 
         with(apkExportCopySpec)
