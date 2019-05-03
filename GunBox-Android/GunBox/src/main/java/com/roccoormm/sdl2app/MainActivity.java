@@ -8,6 +8,19 @@ import org.libsdl.app.SDLActivity;
 
 public class MainActivity extends SDLActivity {
     /**
+     * This method is called by SDL before starting the native application thread.
+     * It can be overridden to provide the arguments after the application name.
+     * The default implementation returns an empty array. It never returns null.
+     * @return arguments for the native application.
+     */
+    @Override
+    protected String[] getArguments() {
+        return new String[] {
+                "--renderer:", "Vulkan"
+        };
+    }
+
+    /**
      * This method is called by SDL before loading the native shared libraries.
      * It can be overridden to provide names of shared libraries to be loaded.
      * The default implementation returns the defaults. It never returns null.
