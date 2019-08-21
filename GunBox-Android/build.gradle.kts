@@ -42,7 +42,7 @@ extra.apply {
     // External libraries source location
     set("externalLibrariesDirectory", canonizePath("${rootDir.parent}/ExternalLibraries/"))
     // Main project source location
-    set("appProjectDirectory", canonizePath("${rootDir.parent}/GunBox/GunBox"))
+    set("appProjectDirectory", canonizePath("${rootDir.parent}/GunBox/GunBox/Gunbox"))
     // Location for library build artifacts
     set("nativeLibraryArtifactsOutputDirectory", canonizePath("${buildOutputRootDirectory}/__LibraryBuildArtifacts"))
     // Build directories location

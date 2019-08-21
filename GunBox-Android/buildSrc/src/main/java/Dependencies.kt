@@ -19,7 +19,7 @@ object Versions {
     const val targetSdk = 26
 
     // Plugins
-    const val androidGradlePlugin = "3.4.0"
+    const val androidGradlePlugin = "3.5.0"
 
     // CMake
     const val cmake = "3.14.0"
