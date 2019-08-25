@@ -37,7 +37,7 @@ object Deps {
     var sdl2_BuildAsShared = "YES"                  // SDL2 library type (SHARED)
     const val sdl2_ModuleName = "libsdl2"           // The name of the SDL2 module
     var sdl2_Targets = "SDL2"                       // SDL2 library targets to build
-    val sdl2_LibraryDirectoryName = "SDL2-2.0.8"
+    val sdl2_LibraryDirectoryName = "SDL2-2.0.10"
 
     init {
         if (usingStaticLibraries) {

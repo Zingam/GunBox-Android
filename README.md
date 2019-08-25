@@ -8,14 +8,14 @@ GunBox-Android
 ## Prerequisites
 
 ### Software
-1. Android NDK r19
-2. Android Studio 3.4
+1. Android NDK r20
+2. Android Studio 3.5
 3. C++17 compiler
 4. CMake 3.14.0 (installed externally)
 
 ### Third Party Libraries
 1. FreeType 2.9.1 (or newer)
-2. SDL 2.0.8 (or newer)
+2. SDL 2.0.10 (or newer)
 
 ## Configuring the Build
 
@@ -62,3 +62,14 @@ GunBox-Android
 ```
   find_library(ANDROID_DL_LIBRARY NAMES libdl.so dl)
 ```
+3. HIDAPI library is not properly supported for CMake builds on Android so it
+   may need to be disabled:
+* In libsdl2 in `build.gradle.kts` set the option `HIDAPI:BOOL`:
+```
+  cmake {
+      // Disable the HIDAPI library support in SDL 2.0.10
+      arguments.add("-DHIDAPI:BOOL=FALSE")
+  }
+```
+* In `SDLActivity.java` modify the method `onCreate` as described in the
+  overridden method in `MainActivity.java`.
