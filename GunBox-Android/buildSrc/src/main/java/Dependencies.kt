@@ -14,12 +14,12 @@ object Versions {
     const val versionName = "1.0.0"
 
     // Build configuration
-    const val compileSdk = 26
-    const val minSdk = 26
-    const val targetSdk = 26
+    const val compileSdk = 28
+    const val minSdk = 28
+    const val targetSdk = 28
 
     // Plugins
-    const val androidGradlePlugin = "3.5.0"
+    const val androidGradlePlugin = "3.5.2"
 
     // CMake
     const val cmake = "3.14.0"

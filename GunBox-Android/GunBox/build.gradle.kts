@@ -66,7 +66,7 @@ android {
             externalNativeBuild {
                 cmake {
                     // Debug options
-                    arguments.add("-Doption_CheckGraphicsApiCalls:BOOL=${Options.checkGraphicsApiCalls}")
+                    arguments.add("-Doption_Graphics_CheckGraphicsApiCalls:BOOL=${Options.checkGraphicsApiCalls}")
                     arguments.add("-Doption_EnableLoggingLevel_Verbose:BOOL=${Options.enableLoggingLevel_Verbose}")
                 }
             }
