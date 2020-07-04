@@ -38,7 +38,7 @@ object Deps {
     const val sdl2_ModuleName = "libsdl2"           // The name of the SDL2 module
     var sdl2_Targets = "SDL2"                       // SDL2 library targets to build
     // Location of SDL2 Java source files
-    const val sdl2_LibraryDirectoryName = "SDL2-2.0.12"
+    const val sdl2_LibraryDirectoryName = "SDL2"
 
     init {
         if (usingStaticLibraries) {

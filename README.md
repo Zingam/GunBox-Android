@@ -8,10 +8,10 @@ GunBox-Android
 ## Prerequisites
 
 ### Software
-1. Android NDK r20
-2. Android Studio 3.5
+1. Android NDK r21
+2. Android Studio 4.2
 3. C++17 compiler
-4. CMake 3.14.0 (installed externally)
+4. CMake 3.18.0 (installed externally)
 
 ### Third Party Libraries
 1. FreeType 2.9.1 (or newer)
@@ -51,25 +51,7 @@ GunBox-Android
   GunBox_Engine_main
   $<$<PLATFORM_ID:Android>:-Wl,--no-whole-archive>
 ```
+2. `Deps.sdl2_LibraryDirectoryName` is the directory containing the SDL2 sources
 
-2. As Android does not support static linking of `libdl.a`, SDL2's
-   CMakeLists.txt may need to be modified.
-* Find the following line:
-```
-  find_library(ANDROID_DL_LIBRARY dl)
-```
-* and change it to:
-```
-  find_library(ANDROID_DL_LIBRARY NAMES libdl.so dl)
-```
-3. HIDAPI library is not properly supported for CMake builds on Android so it
-   may need to be disabled:
-* In libsdl2 in `build.gradle.kts` set the option `HIDAPI:BOOL`:
-```
-  cmake {
-      // Disable the HIDAPI library support in SDL 2.0.10
-      arguments.add("-DHIDAPI:BOOL=FALSE")
-  }
-```
 * In `SDLActivity.java` modify the method `onCreate` as described in the
   overridden method in `MainActivity.java`.
