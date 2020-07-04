@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.10)
 
+project("SDL2")
+
 include("${CMAKE_CURRENT_LIST_DIR}/../__cmake/ExternalLibraries.cmake")
 
 # Get a list of all directories with the specified prefix

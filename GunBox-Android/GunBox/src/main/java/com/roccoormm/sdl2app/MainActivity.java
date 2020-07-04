@@ -44,20 +44,6 @@ public class MainActivity extends SDLActivity {
     // Setup
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // In SDLActivity.java define:
-        //   protected static boolean mHIDAPIEnabled = true;
-        // In SDLActivity.java in:
-        //   protected void onCreate(Bundle savedInstanceState)
-        // modify:
-        //   mHIDDeviceManager = HIDDeviceManager.acquire(this);
-        // to:
-        //   if (SDLActivity.mHIDAPIEnabled) {
-        //        mHIDDeviceManager = HIDDeviceManager.acquire(this);
-        //   }
-
-        // Disable HIDAPI library usage
-        SDLActivity.mHIDAPIEnabled = false;
-
         super.onCreate(savedInstanceState);
     }
 }

@@ -2,12 +2,12 @@ import com.android.build.gradle.api.ApplicationVariant
 import com.android.build.gradle.api.BaseVariantOutput
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
-plugins { id("com.android.application") }
+plugins {
+    id("com.android.application")
+}
 
 android {
     compileSdkVersion(Versions.compileSdk)
-
-
 
     defaultConfig {
         applicationId = Versions.applicationId
@@ -19,7 +19,7 @@ android {
 
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
-            setAbiFilters(Deps.abiFilters)
+            abiFilters.addAll(Deps.abiFilters)
         }
 
         externalNativeBuild {
@@ -50,12 +50,9 @@ android {
             // of your CMake or ndk-build project so that they are packaged in
             // your app’s APK.
             val ndkPath = System.getenv("ANDROID_NDK")
-            if (null != ndkPath)
-            {
+            if (null != ndkPath) {
                 jniLibs.srcDir("$ndkPath/sources/third_party/vulkan/src/build-android/jniLibs/")
-            }
-            else
-            {
+            } else {
                 logger.error("Environment variable \"ANDROID_NDK\" is not defined. Vulkan layers won't be available.")
             }
         }
@@ -82,14 +79,15 @@ android {
         cmake {
             // Tells Gradle to put outputs from external native
             // builds in the path specified below.
-            setBuildStagingDirectory("${rootProject.extra["nativeStagingDirectory"]}/${project.name}")
+            //setBuildStagingDirectory()
+            buildStagingDirectory = File("${rootProject.extra["nativeStagingDirectory"]}/${project.name}")
 
             // Tells Gradle to find the root CMake build script in the same
             // directory as the module's build.gradle.kts.kts file. Gradle requires this
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
-            setPath("${rootProject.extra["appProjectDirectory"]}/CMakeLists.txt")
-            setVersion(Versions.cmake)
+            path = File("${rootProject.extra["appProjectDirectory"]}/CMakeLists.txt")
+            version = Versions.cmake
         }
     }
 

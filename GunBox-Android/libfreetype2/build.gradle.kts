@@ -13,7 +13,7 @@ android {
 
         ndk {
             // Limiting to a smaller set of  ABIs to save time while testing:
-            setAbiFilters(Deps.abiFilters)
+            abiFilters.addAll(Deps.abiFilters)
         }
 
         externalNativeBuild {
@@ -45,13 +45,13 @@ android {
         cmake {
             // Tells Gradle to put outputs from external native
             // builds in the path specified below.
-            setBuildStagingDirectory("${rootProject.extra["nativeStagingDirectory"]}/${project.name}")
+            buildStagingDirectory = File("${rootProject.extra["nativeStagingDirectory"]}/${project.name}")
 
             // Tells Gradle to find the root CMake build script in the same
             // directory as the module's build.gradle file. Gradle requires this
             // build script to add your CMake project as a build dependency and
             // pull your native sources into your Android project.
-            setPath("${rootProject.extra["externalLibrariesDirectory"]}/FreeType2/CMakeLists.txt")
+            path = File("${rootProject.extra["externalLibrariesDirectory"]}/FreeType2/CMakeLists.txt")
             setVersion(Versions.cmake)
         }
     }

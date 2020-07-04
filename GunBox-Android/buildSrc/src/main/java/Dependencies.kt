@@ -19,10 +19,10 @@ object Versions {
     const val targetSdk = 28
 
     // Plugins
-    const val androidGradlePlugin = "3.5.2"
+    const val androidGradlePlugin = "4.2.0-alpha03"
 
     // CMake
-    const val cmake = "3.14.0"
+    const val cmake = "3.18.0+"
 }
 
 object Deps {
@@ -37,7 +37,8 @@ object Deps {
     var sdl2_BuildAsShared = "YES"                  // SDL2 library type (SHARED)
     const val sdl2_ModuleName = "libsdl2"           // The name of the SDL2 module
     var sdl2_Targets = "SDL2"                       // SDL2 library targets to build
-    val sdl2_LibraryDirectoryName = "SDL2-2.0.10"
+    // Location of SDL2 Java source files
+    const val sdl2_LibraryDirectoryName = "SDL2-2.0.12"
 
     init {
         if (usingStaticLibraries) {

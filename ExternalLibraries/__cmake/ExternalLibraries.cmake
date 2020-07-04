@@ -11,10 +11,12 @@ include_guard()
 ################################################################################
 
 function (EnumerateDirectories directories sourceDirectory libraryNamePrefix)
+  if (NOT IS_DIRECTORY "${sourceDirectory}")
+    message (FATAL_ERROR "Source file directory not found: ${sourceDirectory}")
+  endif ()
+  
   file (GLOB __Paths RELATIVE "${sourceDirectory}" "${sourceDirectory}/*")
-
-  set (__LastPath "")
-    set(_val "")
+  
   foreach (__Path ${__Paths})
     if (IS_DIRECTORY "${sourceDirectory}/${__Path}")
       string(REGEX MATCH "^${libraryNamePrefix}" __IsLibraryDirectory "${__Path}")
@@ -45,7 +47,7 @@ function (GetLibraryDirectory
   EnumerateDirectories(__LibraryDirectories
     "${librarySearchPath}" "${sourceLibraryPrefix}"
   )
-  
+
   # Only one source directory is allowed
   list (LENGTH __LibraryDirectories __LibraryDirectoriesLength)
   if (__LibraryDirectoriesLength GREATER 1)
