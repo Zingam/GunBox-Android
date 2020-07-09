@@ -18,6 +18,7 @@ android {
         versionName = Versions.versionName
 
         ndk {
+            ndkVersion = Versions.ndkVersion
             // Limiting to a smaller set of  ABIs to save time while testing:
             abiFilters.addAll(Deps.abiFilters)
         }

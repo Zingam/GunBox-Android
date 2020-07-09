@@ -16,6 +16,7 @@ android {
         }
 
         ndk {
+            ndkVersion = Versions.ndkVersion
             // Limiting to a smaller set of  ABIs to save time while testing:
             abiFilters.addAll(Deps.abiFilters)
         }
@@ -26,8 +27,6 @@ android {
                 //   Location on your host where CMake puts the LIBRARY
                 //   target files when built
                 arguments.add("-D.LibraryArtifactsOutputDirectory:STRING=${rootProject.extra["nativeLibraryArtifactsOutputDirectory"]}/${project.name}")
-                // Disable the HIDAPI library support in SDL 2.0.10
-                arguments.add("-DHIDAPI:BOOL=FALSE")
 
                 // Specifies the library and executable targets from your CMake
                 // project that Gradle should build.

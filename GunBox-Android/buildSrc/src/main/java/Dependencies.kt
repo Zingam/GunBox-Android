@@ -17,9 +17,10 @@ object Versions {
     const val compileSdk = 28
     const val minSdk = 28
     const val targetSdk = 28
+    const val ndkVersion = "21.3.6528147"
 
     // Plugins
-    const val androidGradlePlugin = "4.2.0-alpha03"
+    const val androidGradlePlugin = "4.2.0-alpha04"
 
     // CMake
     const val cmake = "3.18.0+"
@@ -27,7 +28,7 @@ object Versions {
 
 object Deps {
     // Application
-    val abiFilters = listOf("arm64-v8a") // Android platforms to compile for
+    val abiFilters = listOf("arm64-v8a")            // Android platforms to compile for
 
     // Libraries
     //   FreeType2
@@ -42,14 +43,11 @@ object Deps {
 
     init {
         if (usingStaticLibraries) {
-            freetype2_BuildAsShared = "NO" // FreeType2 library type (STATIC)
-            sdl2_BuildAsShared = "NO"      // SDL2 library type (STATIC)
-            sdl2_Targets = "SDL2-static"   // SDL2 library targets to build
+            freetype2_BuildAsShared = "NO"          // FreeType2 library type (STATIC)
+            sdl2_BuildAsShared = "NO"               // SDL2 library type (STATIC)
+            sdl2_Targets = "SDL2-static"            // SDL2 library targets to build
         }
     }
-
-    // Plugins
-    const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.androidGradlePlugin}"
 
     // Final report
     init {
